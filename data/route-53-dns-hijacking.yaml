@@ -1,0 +1,22 @@
+Category: Command and Control
+Command: aws route53 change-resource-record-sets
+Detection:
+- Monitor Route 53 changes in CloudTrail.
+Example:
+- Command: aws route53 change-resource-record-sets --hosted-zone-id Z123456789 --change-batch
+    file://malicious-dns.json
+  Output: DNS records updated
+MITRE_ATT&CK: T1071
+Service: AWS Route 53
+description: Modifies DNS records to redirect traffic to attacker-controlled domains.
+impact:
+- traffic redirection
+mitigation: Restrict Route 53 permissions. Audit DNS records regularly.
+name: Route 53 DNS Hijacking
+references:
+- https://docs.aws.amazon.com/Route53/latest/APIReference/API_ChangeResourceRecordSets.html
+tags:
+- command-and-control
+- route53
+- dns
+- T1071

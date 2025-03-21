@@ -1,0 +1,23 @@
+Category: Reconnaissance
+Command: aws iam list-roles
+Detection:
+- Monitor CloudTrail for excessive ListRoles or GetPolicy calls from unusual sources.
+Example:
+- Command: aws iam list-roles
+  Output: JSON list of roles
+MITRE_ATT&CK: T1526
+Service: AWS IAM
+description: Enumerates IAM roles and policies to identify privileges or targets for
+  escalation.
+impact:
+- privilege discovery
+mitigation: Limit IAM permissions to least privilege. Use AWS Config to audit role
+  usage.
+name: IAM Policy Enumeration
+references:
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
+tags:
+- reconnaissance
+- iam
+- policy
+- T1526

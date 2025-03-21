@@ -1,0 +1,24 @@
+Category: Code Execution
+Command: aws ssm send-command
+Detection:
+- Monitor SSM command logs for unusual commands or targets.
+Example:
+- Command: aws ssm send-command --instance-ids i-1234567890abcdef0 --document-name
+    AWS-RunShellScript --parameters commands="whoami"
+  Output: Command execution result
+MITRE_ATT&CK: T1059
+Service: AWS Systems Manager (SSM)
+description: Executes commands on EC2 instances via SSM for remote code execution
+  or lateral movement.
+impact:
+- code execution
+- lateral movement
+mitigation: Limit SSM permissions to trusted users. Disable SSM on sensitive instances.
+name: SSM Command Execution
+references:
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-send-command.html
+tags:
+- code-execution
+- ssm
+- remote
+- T1059

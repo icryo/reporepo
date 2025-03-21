@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">All Tools</h2>
+<form class="mb-4" action="/search" method="get">
+    <div class="input-group">
+        <input type="text" id="search-input" name="query" class="form-control" placeholder="e.g., code execution">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+<div id="instant-results" class="mb-4"></div>
+<div class="row">
+    {% for tool in tools %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="/tool/{{ tool.name }}">{{ tool.name }}</a></h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+$(function() {
+    $("#search-input").on('keyup', function() {
+        var query = $(this).val();
+        if (query.length >= 2) {
+            $.getJSON("/suggest", { q: query }, function(data) {
+                var results = $("#instant-results");
+                results.empty();
+                if (data.length > 0) {
+                    var resultList = $("<div>").addClass("row");
+                    data.forEach(function(item) {
+                        var div = $("<div>").addClass("col-md-4 mb-3");
+                        var card = $("<div>").addClass("card");
+                        var cardBody = $("<div>").addClass("card-body");
+                        var link = $("<a>").attr("href", item.url).text(item.name).addClass("card-title");
+                        var tags = $("<span>").text(" [" + item.matched.join(", ") + "]").addClass("text-muted");
+                        cardBody.append(link).append(tags);
+                        card.append(cardBody);
+                        div.append(card);
+                        resultList.append(div);
+                    });
+                    results.append(resultList);
+                } else {
+                    results.text("No matches found.");
+                }
+            });
+        } else {
+            $("#instant-results").empty();
+        }
+    });
+});
+</script>
+{% endblock %}

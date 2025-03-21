@@ -1,0 +1,23 @@
+Category: Data Exfiltration
+Command: aws ec2 modify-snapshot-attribute
+Detection:
+- Monitor CloudTrail for ModifySnapshotAttribute with "all" group.
+Example:
+- Command: aws ec2 modify-snapshot-attribute --snapshot-id snap-1234567890abcdef0
+    --attribute createVolumePermission --operation-type add --group all
+  Output: Snapshot made public
+MITRE_ATT&CK: T1537
+Service: AWS EBS
+description: Modifies an EBS snapshot to be public, allowing data extraction from
+  volumes.
+impact:
+- data exfiltration
+mitigation: Restrict snapshot modification permissions. Encrypt EBS volumes.
+name: EBS Snapshot Exposure
+references:
+- https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifySnapshotAttribute.html
+tags:
+- data-exfiltration
+- ebs
+- snapshot
+- T1537

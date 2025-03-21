@@ -1,0 +1,25 @@
+Category: Persistence
+Command: aws sts assume-role
+Detection:
+- Monitor CloudTrail for AssumeRole events with unusual session names, source IPs,
+  or frequent chaining.
+Example:
+- Command: aws sts assume-role --role-arn arn:aws:iam::TARGET_ACCOUNT:role/TargetRole
+    --role-session-name "legit-session"
+  Output: Temporary credentials JSON
+MITRE_ATT&CK: TA0003
+Service: AWS IAM
+description: Assumes an IAM role to gain temporary credentials, chaining roles across
+  accounts or services for persistent access.
+impact:
+- persistent access
+mitigation: Restrict role trust policies to specific principals. Enable MFA for role
+  assumption.
+name: IAM Role Chaining
+references:
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html
+tags:
+- persistence
+- iam
+- role-assumption
+- TA0003

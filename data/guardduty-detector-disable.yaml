@@ -1,0 +1,22 @@
+Category: Defense Evasion
+Command: aws guardduty delete-detector
+Detection:
+- Monitor CloudTrail for DeleteDetector events.
+Example:
+- Command: aws guardduty delete-detector --detector-id 1234567890abcdef0
+  Output: Detector deleted
+MITRE_ATT&CK: T1562
+Service: AWS GuardDuty
+description: Disables a GuardDuty detector to evade security monitoring.
+impact:
+- security evasion
+mitigation: Restrict GuardDuty management permissions. Use organizational policies
+  to enforce detectors.
+name: GuardDuty Detector Disable
+references:
+- https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_manage_detector.html
+tags:
+- defense-evasion
+- guardduty
+- monitoring
+- T1562

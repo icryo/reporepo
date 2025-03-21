@@ -1,0 +1,23 @@
+Category: Persistence
+Command: aws events put-rule
+Detection:
+- Monitor CloudTrail for PutRule events with unusual targets.
+Example:
+- Command: aws events put-rule --name my-rule --schedule-expression "rate(1 hour)"
+    --state ENABLED
+  Output: Rule ARN
+MITRE_ATT&CK: TA0003
+Service: Amazon EventBridge
+description: Creates an EventBridge rule to trigger malicious Lambda functions for
+  persistence or execution.
+impact:
+- persistent execution
+mitigation: Restrict EventBridge rule creation permissions. Audit rule targets.
+name: EventBridge Rule Creation
+references:
+- https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutRule.html
+tags:
+- persistence
+- eventbridge
+- scheduling
+- TA0003

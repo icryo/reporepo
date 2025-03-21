@@ -1,0 +1,23 @@
+Category: Persistence
+Command: aws cloudformation update-stack
+Detection:
+- Monitor CloudTrail for UpdateStack events with unusual templates.
+Example:
+- Command: aws cloudformation update-stack --stack-name my-stack --template-body file://malicious-template.json
+  Output: Stack update initiated
+MITRE_ATT&CK: TA0003
+Service: AWS CloudFormation
+description: Updates a CloudFormation stack to introduce malicious resources for persistence
+  or execution.
+impact:
+- persistent access
+- resource execution
+mitigation: Restrict stack modification permissions. Validate templates before deployment.
+name: CloudFormation Stack Drift
+references:
+- https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_UpdateStack.html
+tags:
+- persistence
+- cloudformation
+- stack
+- TA0003

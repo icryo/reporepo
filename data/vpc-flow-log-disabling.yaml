@@ -1,0 +1,21 @@
+Category: Defense Evasion
+Command: aws ec2 delete-flow-logs
+Detection:
+- Monitor CloudTrail for DeleteFlowLogs events.
+Example:
+- Command: aws ec2 delete-flow-logs --flow-log-ids fl-1234567890abcdef0
+  Output: Flow logs deleted
+MITRE_ATT&CK: T1562
+Service: AWS VPC
+description: Disables VPC flow logs to hide network activity from detection.
+impact:
+- network evasion
+mitigation: Restrict permissions to modify flow logs. Use AWS Config to enforce logging.
+name: VPC Flow Log Disabling
+references:
+- https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+tags:
+- defense-evasion
+- vpc
+- network
+- T1562

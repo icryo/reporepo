@@ -1,0 +1,23 @@
+Category: Code Execution
+Command: aws lambda invoke
+Detection:
+- Monitor Lambda execution logs for unusual payloads or unexpected invocations.
+Example:
+- Command: 'aws lambda invoke --function-name my-function --payload ''{"malicious":
+    "code"}'' output.json'
+  Output: Execution result in output.json
+MITRE_ATT&CK: T1059
+Service: AWS Lambda
+description: Invokes a Lambda function to execute arbitrary malicious code in a trusted
+  serverless environment.
+impact:
+- code execution
+mitigation: Restrict Lambda execution permissions. Review function code regularly.
+name: Lambda Function Invocation
+references:
+- https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
+tags:
+- code-execution
+- lambda
+- serverless
+- T1059

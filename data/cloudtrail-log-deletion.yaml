@@ -1,0 +1,22 @@
+Category: Defense Evasion
+Command: aws cloudtrail delete-trail
+Detection:
+- Monitor CloudTrail for DeleteTrail events.
+Example:
+- Command: aws cloudtrail delete-trail --name my-trail
+  Output: Trail deleted
+MITRE_ATT&CK: T1070
+Service: AWS CloudTrail
+description: Deletes a CloudTrail trail to evade detection by removing audit logs.
+impact:
+- log evasion
+mitigation: Restrict permissions to delete trails. Enable multi-region trails with
+  S3 bucket protection.
+name: CloudTrail Log Deletion
+references:
+- https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_DeleteTrail.html
+tags:
+- defense-evasion
+- cloudtrail
+- logging
+- T1070

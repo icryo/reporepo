@@ -1,0 +1,22 @@
+Category: Defense Evasion
+Command: aws kms schedule-key-deletion
+Detection:
+- Monitor CloudTrail for ScheduleKeyDeletion events.
+Example:
+- Command: aws kms schedule-key-deletion --key-id alias/my-key --pending-window-in-days
+    7
+  Output: Key scheduled for deletion
+MITRE_ATT&CK: T1485
+Service: AWS KMS
+description: Schedules deletion of a KMS key to disrupt encryption or access controls.
+impact:
+- data disruption
+mitigation: Restrict KMS key deletion permissions. Use key rotation instead of deletion.
+name: KMS Key Deletion
+references:
+- https://docs.aws.amazon.com/kms/latest/APIReference/API_ScheduleKeyDeletion.html
+tags:
+- defense-evasion
+- kms
+- encryption
+- T1485

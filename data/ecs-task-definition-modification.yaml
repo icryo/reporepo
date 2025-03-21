@@ -1,0 +1,23 @@
+Category: Code Execution
+Command: aws ecs register-task-definition
+Detection:
+- Monitor ECS task definitions for unexpected changes.
+Example:
+- Command: 'aws ecs register-task-definition --family my-task --container-definitions
+    ''[{"name": "malicious", "image": "attacker-image", "command": ["sh", "-c", "malicious-code"]}]'''
+  Output: Task definition ARN
+MITRE_ATT&CK: T1059
+Service: AWS ECS
+description: Registers a new task definition with malicious container commands for
+  code execution.
+impact:
+- code execution
+mitigation: Restrict ECS task definition permissions. Review container images.
+name: ECS Task Definition Modification
+references:
+- https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RegisterTaskDefinition.html
+tags:
+- code-execution
+- ecs
+- container
+- T1059

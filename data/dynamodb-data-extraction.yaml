@@ -1,0 +1,22 @@
+Category: Data Exfiltration
+Command: aws dynamodb scan
+Detection:
+- Monitor CloudTrail for Scan operations from unusual sources or excessive data retrieval.
+Example:
+- Command: aws dynamodb scan --table-name my-table
+  Output: Table data JSON
+MITRE_ATT&CK: T1537
+Service: AWS DynamoDB
+description: Scans a DynamoDB table to extract sensitive data for exfiltration.
+impact:
+- data exfiltration
+mitigation: Restrict DynamoDB permissions to least privilege. Encrypt table data and
+  limit scan access.
+name: DynamoDB Data Extraction
+references:
+- https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
+tags:
+- data-exfiltration
+- dynamodb
+- scan
+- T1537

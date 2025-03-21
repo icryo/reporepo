@@ -1,0 +1,24 @@
+Category: Persistence
+Command: aws ec2 associate-address
+Detection:
+- Monitor CloudTrail for AssociateAddress events.
+Example:
+- Command: aws ec2 associate-address --instance-id i-1234567890abcdef0 --public-ip
+    203.0.113.1
+  Output: IP associated
+MITRE_ATT&CK: TA0003
+Service: AWS EC2
+description: Associates an Elastic IP with a compromised instance for persistent network
+  access.
+impact:
+- persistent access
+mitigation: Restrict Elastic IP management permissions. Use VPC security groups to
+  limit access.
+name: Elastic IP Association
+references:
+- https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateAddress.html
+tags:
+- persistence
+- ec2
+- elastic-ip
+- TA0003

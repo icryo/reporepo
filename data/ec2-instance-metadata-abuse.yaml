@@ -1,0 +1,23 @@
+Category: Privilege Escalation
+Command: curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+Detection:
+- Monitor EC2 instance logs for metadata service requests from compromised instances.
+Example:
+- Command: curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+  Output: Temporary credentials for attached role
+MITRE_ATT&CK: T1078
+Service: AWS EC2
+description: "Retrieves temporary IAM credentials from an EC2 instance\u2019s metadata\
+  \ service for privilege escalation."
+impact:
+- privilege escalation
+mitigation: Restrict IAM roles attached to EC2 instances. Use IMDSv2 to require token-based
+  access.
+name: EC2 Instance Metadata Abuse
+references:
+- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-security.html
+tags:
+- privilege-escalation
+- ec2
+- metadata
+- T1078
