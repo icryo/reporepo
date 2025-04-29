@@ -1,20 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="mb-4">All Tools</h2>
-<form class="mb-4" action="/search" method="get">
-    <div class="input-group">
-        <input type="text" id="search-input" name="query" class="form-control" placeholder="e.g., code execution">
-        <button type="submit" class="btn btn-primary">Search</button>
+<h2 class="mb-4">All TTPs</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <form class="mb-4" action="/search" method="get">
+            <div class="input-group">
+                <input type="text" id="search-input" name="query" class="form-control" placeholder="e.g., code execution">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-md-4 text-end">
+        <button class="btn btn-success" id="add-new-tool">New TTP</button>
+    </div>
+</div>
+
 <div id="instant-results" class="mb-4"></div>
+
+<!-- New TTP Form (Hidden by default) -->
+<div id="new-tool-form" class="card mb-4" style="display: none;">
+    <div class="card-header">
+        <h5>Add New TTP</h5>
+    </div>
+    <div class="card-body">
+        <form action="/create" method="post">
+            <div class="mb-3">
+                <label for="filename" class="form-label">Filename (without extension)</label>
+                <input type="text" class="form-control" id="filename" name="filename" required>
+            </div>
+            <div class="mb-3">
+                <label for="yamlContent" class="form-label">YAML Content</label>
+                <textarea class="form-control" id="yamlContent" name="yamlContent" rows="10" placeholder="name: TTP Name
+description: TTP description
+impact:
+- impact1
+- impact2
+mitigation: Mitigation steps
+references:
+- https://example.com/reference1
+tags:
+- tag1
+- tag2" required></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" id="cancel-add" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-success">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="row">
     {% for tool in tools %}
     <div class="col-md-4 mb-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"><a href="/tool/{{ tool.name }}">{{ tool.name }}</a></h5>
+                <p class="card-text text-muted">{{ tool.description | truncate(100) }}</p>
             </div>
         </div>
     </div>
@@ -23,6 +78,7 @@
 
 <script>
 $(function() {
+    // Search functionality
     $("#search-input").on('keyup', function() {
         var query = $(this).val();
         if (query.length >= 2) {
@@ -50,6 +106,15 @@ $(function() {
         } else {
             $("#instant-results").empty();
         }
+    });
+
+    // Add new TTP form toggle
+    $("#add-new-tool").click(function() {
+        $("#new-tool-form").slideDown();
+    });
+
+    $("#cancel-add").click(function() {
+        $("#new-tool-form").slideUp();
     });
 });
 </script>

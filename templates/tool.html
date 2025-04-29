@@ -2,17 +2,83 @@
 
 {% block content %}
 <h2 class="mb-4">{{ tool.name }}</h2>
-<div class="card">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="card mb-4">
     <div class="card-body">
-        <p><strong>Description:</strong> {{ tool.description }}</p>
-        <p><strong>Impact:</strong> {{ tool.impact | join(', ') }}</p>
-        <p><strong>Mitigation:</strong> {{ tool.mitigation }}</p>
-        <p><strong>References:</strong> 
-            {% for ref in tool.references %}
-                <a href="{{ ref }}" target="_blank">{{ ref }}</a>{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-        <p><strong>Tags:</strong> {{ tool.tags | join(', ') }}</p>
+        <div id="view-mode">
+            <p><strong>Description:</strong> {{ tool.description }}</p>
+            <p><strong>Impact:</strong> {{ tool.impact | join(', ') }}</p>
+            <p><strong>Mitigation:</strong> {{ tool.mitigation }}</p>
+            <p><strong>References:</strong> 
+                {% for ref in tool.references %}
+                    <a href="{{ ref }}" target="_blank">{{ ref }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Tags:</strong> {{ tool.tags | join(', ') }}</p>
+            <div class="d-flex justify-content-between">
+                <button id="edit-button" class="btn btn-primary">Edit</button>
+                <button id="delete-button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+        
+        <div id="edit-mode" style="display: none;">
+            <form action="/update/{{ filename }}" method="post">
+                <div class="mb-3">
+                    <label for="yamlContent" class="form-label">YAML Content</label>
+                    <textarea class="form-control" id="yamlContent" name="yamlContent" rows="15">{{ yaml_content }}</textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="button" id="cancel-edit" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('edit-button').addEventListener('click', function() {
+        document.getElementById('view-mode').style.display = 'none';
+        document.getElementById('edit-mode').style.display = 'block';
+    });
+    
+    document.getElementById('cancel-edit').addEventListener('click', function() {
+        document.getElementById('view-mode').style.display = 'block';
+        document.getElementById('edit-mode').style.display = 'none';
+    });
+    
+    document.getElementById('delete-button').addEventListener('click', function() {
+        if (confirm('Are you sure you want to delete this TTP?')) {
+            // Create a form and submit it programmatically
+            fetch('/delete/{{ tool.name }}', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error deleting the TTP. Please try again.');
+            });
+        }
+    });
+</script>
 {% endblock %}
