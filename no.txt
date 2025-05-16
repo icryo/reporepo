@@ -107,3 +107,65 @@ object-deserialization - Insecure object deserialization in Java
 hashids-with-django-secret - Insecure use of HashIDs with Django secret
 hashids-with-flask-secret - Insecure use of HashIDs with Flask secret
 X509Certificate2-privkey - Issues with X509 certificate private keys
+
+
+
+T0:
+
+express-session-hardcoded-secret
+express-jwt-hardcoded-secret
+hardcoded-jwt-secret (jsonwebtoken)
+hardcoded-jwt-secret (jose)
+java-jwt-hardcoded-secret
+jwt-python-hardcoded-secret
+hardcoded-passport-secret
+hardcoded-hmac-key
+avoid_hardcoded_config_SECRET_KEY (Python)
+hardcoded-token
+hardcoded-password-default-argument
+
+tainted-exec
+tainted-code-exec
+eval-use
+exec-use
+user-eval
+user-eval-format-string
+user-exec
+user-exec-format-string
+python-code-injection
+tainted-callable
+
+dangerous-system-call
+dangerous-subprocess-use
+command-injection-os-system
+command-injection-shell-call
+command-injection-process-builder
+command-injection-formatted-runtime-call
+os-system-injection
+dangerous-os-exec
+dangerous-asyncio-exec
+subprocess-injection
+paramiko-exec-command
+python-shell-injection
+nodejs-command-injection
+
+express-third-party-object-deserialization
+insecure-binaryformatter-deserialization (C#)
+object-deserialization (Java)
+jackson-unsafe-deserialization (Java)
+use-snakeyaml-constructor
+
+tainted-file-path (Java)
+tainted-system-command (Java)
+
+jwt-simple-noverify (JavaScript)
+jwt-none-alg (Java)
+jwt-none-alg (JavaScript)
+jwt-python-none-alg
+jwt-decode-without-verify
+java-jwt-decode-without-verify
+
+jinja2-template-injection
+el-injection
+spel-injection
+express-libxml-noent
