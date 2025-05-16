@@ -1,4 +1,6 @@
-Tier 1: HIGH impact + HIGH confidence + LOW likelihood (8)
+cool, rewrite these into groups
+
+anything else in here that should be removed Tier 1: HIGH impact + HIGH confidence + LOW likelihood (8)
 documentbuilderfactory-disallow-doctype-decl-false (Java) - XXE vulnerability in XML processing
 documentbuilderfactory-disallow-doctype-decl-missing (Java) - XXE vulnerability in XML processing
 documentbuilderfactory-external-general-entities-true (Java) - XXE vulnerability in XML processing
